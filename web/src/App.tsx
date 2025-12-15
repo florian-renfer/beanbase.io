@@ -1,7 +1,9 @@
-import { ComponentExample } from "@/components/component-example";
+import { RecipeCard } from "./components/recipe-card";
 
 export function App() {
-return <ComponentExample />;
+  return (
+    <main className="container"><RecipeCard /></main>
+  )
 }
 
 export default App;
