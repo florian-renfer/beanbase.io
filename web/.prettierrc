@@ -1,0 +1,5 @@
+{
+  "tailwindStylesheet": "./src/index.css",
+  "tailwindFunctions": ["clsx", "cva"],
+  "plugins": ["prettier-plugin-organize-imports", "prettier-plugin-tailwindcss"]
+}
