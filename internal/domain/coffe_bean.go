@@ -12,14 +12,16 @@ type (
 	RoastBlend string
 
 	Bean struct {
-		id        uuid.UUID
-		baristaID uuid.UUID
-		roasterID uuid.UUID
-		countryID uuid.UUID
-		label     string
-		blend     RoastBlend
-		createdAt time.Time
-		updatedAt time.Time
+		id            uuid.UUID
+		baristaID     uuid.UUID
+		roasterID     uuid.UUID
+		countryID     uuid.UUID
+		label         string
+		amountArabica uint8
+		amountRobusta uint8
+		blend         RoastBlend
+		createdAt     time.Time
+		updatedAt     time.Time
 	}
 
 	BeanRepository interface {
@@ -38,41 +40,51 @@ var (
 )
 
 // ID returns the Bean's id.
-func (b *Bean) ID() uuid.UUID {
+func (b Bean) ID() uuid.UUID {
 	return b.id
 }
 
 // BaristaID returns the Bean's barista id.
-func (b *Bean) BaristaID() uuid.UUID {
+func (b Bean) BaristaID() uuid.UUID {
 	return b.baristaID
 }
 
 // RoasterID returns the Bean's roaster id.
-func (b *Bean) RoasterID() uuid.UUID {
+func (b Bean) RoasterID() uuid.UUID {
 	return b.roasterID
 }
 
 // CountryID returns the Bean's country id.
-func (b *Bean) CountryID() uuid.UUID {
+func (b Bean) CountryID() uuid.UUID {
 	return b.countryID
 }
 
 // Label returns the Bean's label.
-func (b *Bean) Label() string {
+func (b Bean) Label() string {
 	return b.label
 }
 
+// AmountArabica returns thee Bean's amount of arabica.
+func (b Bean) AmountArabica() uint8 {
+	return b.amountArabica
+}
+
+// AmountRobusta returns thee Bean's amount of robusta.
+func (b Bean) AmountRobusta() uint8 {
+	return b.amountRobusta
+}
+
 // RoastBlend returns the Bean's roast blend.
-func (b *Bean) RoastBlend() RoastBlend {
+func (b Bean) RoastBlend() RoastBlend {
 	return b.blend
 }
 
 // CreatedAt returns the Bean's creation time.
-func (b *Bean) CreatedAt() time.Time {
+func (b Bean) CreatedAt() time.Time {
 	return b.createdAt
 }
 
 // UpdatedAt returns the Bean's last update time.
-func (b *Bean) UpdatedAt() time.Time {
+func (b Bean) UpdatedAt() time.Time {
 	return b.updatedAt
 }
