@@ -5,9 +5,6 @@
 
 ## 🚦 Running the Project
 
-> [!CAUTION]
-> beanbase does not provide an executable or main function yet!
-
 1. `git clone git clone git@github.com:florian-renfer/beanbase.io.git "beanbase"`
 2. `cd beanbase`
 3. `go mod download`
