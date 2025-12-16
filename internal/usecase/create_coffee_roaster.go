@@ -17,11 +17,11 @@ type (
 
 	// CreateCoffeeRoasterOutput represents the output data after creating a coffee roaster.
 	CreateCoffeeRoasterOutput struct {
-		Id            uuid.UUID `json:"id"`
+		ID            uuid.UUID `json:"id"`
 		Name          string    `json:"name"`
 		OnlineShopURL string    `json:"online_shop_url"`
-		CreatedAt     time.Time `json:"created_at"`
-		UpdatedAt     time.Time `json:"update_at"`
+		CreatedAt     string    `json:"created_at"`
+		UpdatedAt     string    `json:"update_at"`
 	}
 
 	// CreateCoffeeRoasterPresenter formats the output for the create coffee roaster use case.

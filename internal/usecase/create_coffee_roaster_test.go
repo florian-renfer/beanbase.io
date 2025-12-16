@@ -40,7 +40,7 @@ func TestCreateCoffeeRoaster(t *testing.T) {
 
 	tests := []struct {
 		name          string
-		args          CreateCoffeeRoasterInput
+		input         CreateCoffeeRoasterInput
 		repository    domain.CoffeeRoasterRepository
 		presenter     CreateCoffeeRoasterPresenter
 		expected      CreateCoffeeRoasterOutput
@@ -48,7 +48,7 @@ func TestCreateCoffeeRoaster(t *testing.T) {
 	}{
 		{
 			name: "Should create coffee roaster when input is valid",
-			args: CreateCoffeeRoasterInput{
+			input: CreateCoffeeRoasterInput{
 				Name:          coffeeRoasterName,
 				OnlineShopURL: coffeeRoasterOnlineShopUrl,
 			},
@@ -64,25 +64,25 @@ func TestCreateCoffeeRoaster(t *testing.T) {
 			},
 			presenter: mockCreateCoffeeRoasterPresenter{
 				output: CreateCoffeeRoasterOutput{
-					Id:            uuid.MustParse(coffeeRoasterId),
+					ID:            uuid.MustParse(coffeeRoasterId),
 					Name:          coffeeRoasterName,
 					OnlineShopURL: coffeeRoasterOnlineShopUrl,
-					CreatedAt:     time.Date(2025, 12, 16, 19, 26, 43, 0, time.UTC),
-					UpdatedAt:     time.Date(2025, 12, 16, 19, 26, 43, 0, time.UTC),
+					CreatedAt:     time.Date(2025, 12, 16, 19, 26, 43, 0, time.UTC).Format(time.RFC3339),
+					UpdatedAt:     time.Date(2025, 12, 16, 19, 26, 43, 0, time.UTC).Format(time.RFC3339),
 				},
 			},
 			expected: CreateCoffeeRoasterOutput{
-				Id:            uuid.MustParse(coffeeRoasterId),
+				ID:            uuid.MustParse(coffeeRoasterId),
 				Name:          coffeeRoasterName,
 				OnlineShopURL: coffeeRoasterOnlineShopUrl,
-				CreatedAt:     time.Date(2025, 12, 16, 19, 26, 43, 0, time.UTC),
-				UpdatedAt:     time.Date(2025, 12, 16, 19, 26, 43, 0, time.UTC),
+				CreatedAt:     time.Date(2025, 12, 16, 19, 26, 43, 0, time.UTC).Format(time.RFC3339),
+				UpdatedAt:     time.Date(2025, 12, 16, 19, 26, 43, 0, time.UTC).Format(time.RFC3339),
 			},
 			expectedError: nil,
 		},
 		{
 			name: "Should return error when database returns an error",
-			args: CreateCoffeeRoasterInput{
+			input: CreateCoffeeRoasterInput{
 				Name:          coffeeRoasterName,
 				OnlineShopURL: coffeeRoasterOnlineShopUrl,
 			},
@@ -100,7 +100,7 @@ func TestCreateCoffeeRoaster(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			var uc = NewCreateCoffeeRoasterInteractor(tt.repository, tt.presenter, time.Second)
 
-			result, err := uc.Execute(context.TODO(), tt.args)
+			result, err := uc.Execute(context.TODO(), tt.input)
 			if (err != nil) && (err.Error() != tt.expectedError) {
 				t.Errorf("[TestCase '%s'] Result: '%v' | ExpectedError: '%v'", tt.name, err, tt.expectedError)
 			}
