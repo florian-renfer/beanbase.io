@@ -9,6 +9,10 @@ import (
 
 	"github.com/florian-renfer/beanbase.io/internal/adapter/repository"
 
+	"github.com/golang-migrate/migrate/v4"
+	_ "github.com/golang-migrate/migrate/v4/database/pgx/v5"
+	_ "github.com/golang-migrate/migrate/v4/source/file"
+
 	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
@@ -40,7 +44,31 @@ func NewPostgresHandler(c *config) (*postgresHandler, error) {
 		log.Fatalln(err)
 	}
 
+	performMigration(c)
+
 	return &postgresHandler{db: db}, nil
+}
+
+// performMigration applies database schema migrations using the provided configuration.
+// It ensures that the database is up to date with the latest schema changes.
+func performMigration(c *config) {
+	migrationDsn := fmt.Sprintf("pgx5://%s:%s@%s:%s/%s",
+		c.user,
+		c.password,
+		c.host,
+		c.port,
+		c.database,
+	)
+
+	m, err := migrate.New("file://db/migrations/postgres", migrationDsn)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[migrate] Unable to connect to database: %v\n", err)
+		os.Exit(1)
+	}
+	if err := m.Up(); err != nil {
+		fmt.Fprintf(os.Stderr, "[migrate] Unable to perform database migration: %v\n", err)
+		os.Exit(1)
+	}
 }
 
 // BeginTx starts a new database transaction.
