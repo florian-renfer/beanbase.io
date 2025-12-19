@@ -37,7 +37,6 @@ func NewPostgresHandler(c *config) (*postgresHandler, error) {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	defer db.Close()
 
 	err = db.Ping()
 	if err != nil {
@@ -65,7 +64,7 @@ func performMigration(c *config) {
 		fmt.Fprintf(os.Stderr, "[migrate] Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
-	if err := m.Up(); err != nil {
+	if err := m.Up(); err != nil && err != migrate.ErrNoChange {
 		fmt.Fprintf(os.Stderr, "[migrate] Unable to perform database migration: %v\n", err)
 		os.Exit(1)
 	}

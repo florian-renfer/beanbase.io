@@ -1,14 +1,18 @@
 package main
 
 import (
-	"os"
+	"time"
 
+	"github.com/florian-renfer/beanbase.io/internal/infrastructure"
 	"github.com/florian-renfer/beanbase.io/internal/infrastructure/database"
+	"github.com/florian-renfer/beanbase.io/internal/infrastructure/router"
 )
 
 func main() {
-	_, err := database.NewDatabaseSQLFactory(database.InstancePostgres)
-	if err != nil {
-		os.Exit(1)
-	}
+	infrastructure.NewApp().
+		Persistence(database.InstancePostgres).
+		Timeout(time.Second * 10).
+		WebServerPort("4000").
+		WebServer(router.InstanceNet).
+		Start()
 }
